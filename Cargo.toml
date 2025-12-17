@@ -6,7 +6,7 @@ edition = "2024"
 [dependencies]
 serde = "1.0.228"
 serde_json = "1.0.145"
-reqwest = "0.12.26"
+reqwest = {version = "0.12.26", features = ["json"] }
 thiserror = "2.0.17"
 chrono = { version = "0.4.42", features = ["serde"] }
 bon = "3.8.1"
