@@ -10,7 +10,7 @@ use crate::{endpoints::AddressApi, error::TelnyxError};
 ///
 /// # Example
 ///
-/// ```no-run
+/// ```no_run
 /// use telnyx_rs::TelnyxClient;
 ///
 /// # async fn example() -> Result<(), telnyx_rs::TelnyxError> {
