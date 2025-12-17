@@ -1,5 +1,6 @@
 use serde::{Serialize, Deserialize};
 use chrono::{DateTime, Utc};
+use bon::{Builder};
 
 /// Address list and detail object
 #[derive(Debug, Clone, Serialize, Deserialize, Default)]
@@ -57,7 +58,7 @@ pub struct Address {
 }
 
 /// A request to create a new address
-#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, Builder)]
 pub struct CreateAddressRequest {
     /// A customer reference string for customer look ups.
     #[serde(default, skip_serializing_if = "Option::is_none")]
@@ -104,7 +105,7 @@ pub struct CreateAddressRequest {
 }
 
 /// A request to validate an address for emergecy services
-#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, Builder)]
 pub struct ValidateAddressRequest {
     /// The primary street address information about the address.
     pub street_address: String,
@@ -201,7 +202,7 @@ pub enum AddressValidationStatus {
 }
 
 /// Request to accept this address suggestion as the new emergency address
-#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, Builder)]
 pub struct AddressAcceptSuggestionRequest {
     /// The ID of the address.
     #[serde(skip_serializing_if = "Option::is_none")]
