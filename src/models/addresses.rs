@@ -98,9 +98,11 @@ pub struct CreateAddressRequest {
     pub country_code: String,
     /// Indicates whether or not the address should be considered part of your list of addresses that appear for regular use.
     #[serde(default)]
+    #[builder(default)]
     pub address_book: bool,
     /// Indicates whether or not the address should be validated for emergency use upon creation or not. This should be left with the default value of true unless you have used the /addresses/actions/validate endpoint to validate the address separately prior to creation. If an address is not validated for emergency use upon creation and it is not valid, it will not be able to be used for emergency services.
     #[serde(default)]
+    #[builder(default)]
     pub validate_address: bool
 }
 

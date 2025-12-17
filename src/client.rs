@@ -2,8 +2,26 @@ use reqwest::{Client};
 use serde::{Serialize, de::DeserializeOwned};
 use std::time::Duration;
 
-use crate::error::TelnyxError;
+use crate::{endpoints::AddressApi, error::TelnyxError};
 
+/// The API client for interacting with the Telnyx API
+/// 
+/// Use [`TelnyxClient::builder()`] to construct a new client.
+/// 
+/// # Example
+/// 
+/// ```no-run
+/// use telnyx_rs::TelnyxClient;
+/// 
+/// # async fn example() -> Result<(), telnyx_rs::TelnyxError> {
+/// let client = TelnyxClient::builder()
+///     .api_key("your-api-key")
+///     .build()?;
+///
+/// let addresses = client.addresses().list(None).await?;
+/// # Ok(())
+/// # }
+/// ```
 pub struct TelnyxClient {
     pub(crate) http_client: Client,
     pub(crate) api_key: String,
@@ -12,15 +30,27 @@ pub struct TelnyxClient {
 
 /// Builder for construction a [`TelnyxClient`]
 #[derive(Default)]
-pub struct TenlyxClientBuilder {
+pub struct TelnyxClientBuilder {
     api_key: Option<String>,
     base_url: Option<String>,
     timeout: Option<Duration>
 }
 
 impl TelnyxClient {
-    pub fn builder() -> TenlyxClientBuilder {
-        TenlyxClientBuilder::default()
+    /// Create a new client builder
+    pub fn builder() -> TelnyxClientBuilder {
+        TelnyxClientBuilder::default()
+    }
+
+    /// The addresses API
+    /// 
+    /// # Usage
+    ///
+    /// ```no_run
+    /// let addresses = client.addresses().list().await;
+    /// ```
+    pub fn addresses(&self) -> AddressApi<'_> {
+        AddressApi::new(self)
     }
 
     pub(crate) async fn get<T: DeserializeOwned>(&self, path: &str) -> Result<T, TelnyxError> {
@@ -80,7 +110,7 @@ impl TelnyxClient {
     }
 }
 
-impl TenlyxClientBuilder {
+impl TelnyxClientBuilder {
     /// Set the API key (required)
     pub fn api_key(mut self, key: impl Into<String>) -> Self {
         self.api_key = Some(key.into());
@@ -100,6 +130,10 @@ impl TenlyxClientBuilder {
     }
 
     /// Build the client
+    /// # Errors
+    ///
+    /// Returns an error if the API key is not set or if the HTTP client
+    /// fails to initialize.
     pub fn build(self) -> Result<TelnyxClient, TelnyxError> {
         let api_key = self.api_key.ok_or_else(|| TelnyxError::Config("API key is required".into()))?;
         let base_url = self.base_url.unwrap_or_else(|| "https://api.telnyx.com/v2".into());

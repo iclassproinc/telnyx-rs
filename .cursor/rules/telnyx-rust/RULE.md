@@ -97,6 +97,11 @@ telnyx-rust/
       .timeout(Duration::from_secs(30))
       .build()?
 
+### Logging
+- Use structured logging with appropriate levels
+- NEVER log request/response bodies at INFO level or higher
+- Include correlation IDs for request tracing
+
 ## OpenAPI Spec Compliance
 
 ### Schema Adherence
@@ -112,11 +117,6 @@ telnyx-rust/
 ### Deprecation
 - Mirror deprecation warnings from the OpenAPI spec using `#[deprecated]`
 - Include migration guidance in deprecation messages
-
-### Logging
-- Use structured logging with appropriate levels
-- NEVER log request/response bodies at INFO level or higher
-- Include correlation IDs for request tracing
 
 ## Code Style
 - Follow standard Rust formatting (rustfmt)
