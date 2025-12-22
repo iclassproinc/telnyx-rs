@@ -58,6 +58,9 @@ telnyx-rust/
 - Prefer `?` operator for error propagation
 - Use `thiserror` for deriving the crate error type
 - Follow async/await patterns consistently with Tokio
+- Follow the builder pattern for request objects using bon::Builder
+- Follow the builder patter as can be seen in /src
+- Always create an example useage file for the API endpoints similar to addresses_example.rs
 
 ### Serialization (Serde)
 
@@ -143,6 +146,8 @@ telnyx-rust/
 
 ## Testing
 - Write integration tests for endpoints and the client
+- Test both 200 cases and error cases
+- Follow the pattern established "Arrange Act Assert" pattern seen in /tests
 - Mock http clients for responses instead of actually sending http requests
 - Mock external dependencies appropriately
-- Test error conditions and edge cases
+- Test error conditions and edge case
